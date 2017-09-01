@@ -17,7 +17,7 @@
 
 
 
-@interface ViewController ()<UIWebViewDelegate,MFMessageComposeViewControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,UITextFieldDelegate>
+@interface ViewController ()<UIWebViewDelegate,MFMessageComposeViewControllerDelegate,UINavigationControllerDelegate,UITextViewDelegate,UITextFieldDelegate,SocketServerDelegate>
 
 @property(nonatomic, strong) UIImageView *imageView;
 @property(nonatomic, strong) UIWebView *webView;
@@ -43,6 +43,7 @@
 //    });
     
     self.cTest = [[MXCTest alloc] init];
+    self.cTest.delegate = self;
     
 //    @try {
 //        [self func];
@@ -52,6 +53,12 @@
 //        NSLog(@"14");
 //    }
     
+}
+
+- (void)serverMessage:(NSString *)message{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.testView.text = message;
+    });
 }
 
 extern NSString* CTSettingCopyMyPhoneNumber();

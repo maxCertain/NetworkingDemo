@@ -8,7 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol SocketServerDelegate <NSObject>
+
+@optional
+- (void)serverMessage:(NSString *)message;
+
+@end
+
 @interface MXCTest : NSObject
+
+@property(nonatomic,weak) id<SocketServerDelegate>delegate;
 
 - (void)testC;
 

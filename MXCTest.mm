@@ -17,9 +17,22 @@
 {
     self = [super init];
     if (self) {
-        
+        __weak typeof(self)temObj = self;
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            serverLisen(^(char *msg) {
+                printf("sda :%s",msg);
+                NSString *message = [NSString stringWithFormat:@"%s",msg];
+                [temObj shwMessage:message];
+            });
+        });
     }
     return self;
+}
+
+- (void)shwMessage:(NSString *)message{
+    if ([self.delegate respondsToSelector:@selector(serverMessage:)]) {
+        [self.delegate serverMessage:message];
+    }
 }
 
 - (void)sendString:(NSString *)str{
@@ -28,7 +41,6 @@
         isConnect = YES;
         client();
     }
-    
     std::string s = [str cStringUsingEncoding:NSUTF8StringEncoding];
     char a[s.length()];
     strncpy(a,s.c_str(),s.length());
@@ -41,6 +53,5 @@
     
     client();
 }
-
 
 @end

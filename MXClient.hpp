@@ -8,9 +8,13 @@
 
 #ifndef MXClient_hpp
 #define MXClient_hpp
-
 #include <stdio.h>
+
+typedef void(^sServerAccepcCallBack)(char msg[]);
+
 int client();
+
+int serverLisen(sServerAccepcCallBack callBack);
 
 void sendMessage(char s[]);
 
